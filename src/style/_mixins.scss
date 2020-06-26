@@ -1,0 +1,23 @@
+@mixin a($color, $text-decoration, $hover-color, $hover-text-decoration, $active-color, $active-text-decoration)
+{
+    color: $color;
+    text-decoration: $text-decoration;
+
+    &:visited
+    {
+        color: $color;
+        $text-decoration: $text-decoration;
+    }
+
+    &:hover, &:focus
+    {
+        color: $hover-color;
+        text-decoration: $hover-text-decoration;
+    }
+
+    &:active
+    {
+        color: $active-color;
+        text-decoration: $active-text-decoration;
+    }
+}

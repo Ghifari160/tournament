@@ -1,0 +1,63 @@
+{
+    "version": "1",
+    "qualifiers": [
+        {
+            "mode": "comp",
+            "competitor1": "",
+            "competitor2": "",
+            "score1": 0,
+            "score2": 0,
+            "isCompleted": false
+        },
+        {
+            "mode": "comp",
+            "competitor1": "",
+            "competitor2": "",
+            "score1": 0,
+            "score2": 0,
+            "isCompleted": false
+        },
+        {
+            "mode": "comp",
+            "competitor1": "",
+            "competitor2": "",
+            "score1": 0,
+            "score2": 0,
+            "isCompleted": false
+        }
+    ],
+    "semifinals": [
+        {
+            "mode": "comp",
+            "competitor1": "",
+            "competitor2": "",
+            "score1": 0,
+            "score2": 0,
+            "isCompleted": false
+        },
+        {
+            "mode": "single",
+            "competitor1": "",
+            "score1": 0,
+            "isCompleted": false
+        }
+    ],
+    "final": [
+        {
+            "mode": "comp",
+            "competitor1": "",
+            "competitor2": "",
+            "score1": 0,
+            "score2": 0,
+            "isCompleted": false
+        }
+    ],
+    "podium": [
+        {
+            "mode": "single",
+            "competitor1": "",
+            "score1": 0,
+            "isCompleted": false
+        }
+    ]
+}

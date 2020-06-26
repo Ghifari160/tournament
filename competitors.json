@@ -1,0 +1,47 @@
+{
+    "version": "1",
+    "profiles": [
+        {
+            "id": "senatorderosa",
+            "name": "Anne",
+            "taglines": "Taglines",
+            "twitter": "senatorderosa",
+            "twitch": "senatorderosa"
+        },
+        {
+            "id": "catthebouncer",
+            "name": "Cat",
+            "taglines": "Taglines",
+            "twitter": "catthebouncer",
+            "twitch": "catthebouncer"
+        },
+        {
+            "id": "ghifari160",
+            "name": "Ghifari",
+            "taglines": "Taglines",
+            "twitter": "ghifari160",
+            "twitch": "ghifari160"
+        },
+        {
+            "id": "harbingerofmann",
+            "name": "Ben",
+            "taglines": "Taglines",
+            "twitter": "",
+            "twitch": "harbingerofmann"
+        },
+        {
+            "id": "agoodsmallfrog",
+            "name": "Alle",
+            "taglines": "Taglines",
+            "twitter": "",
+            "twitch": "agoodsmallfrog"
+        },
+        {
+            "id": "tylrvibes",
+            "name": "Tyler",
+            "taglines": "Taglines",
+            "twitter": "",
+            "twitch": "tylrvibes"
+        }
+    ]
+}

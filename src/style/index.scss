@@ -1,0 +1,333 @@
+@import "mixins";
+
+body
+{
+    margin: 0;
+    padding: 0;
+}
+
+.header
+{
+    width: 100%;
+    height: 92px + 69px + 40px;
+
+    &__title, &__subtitle
+    {
+        position: relative;
+        z-index: 10;
+
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    &__title
+    {
+        margin-top: 510px - 92px - 69px - 40px;
+
+        font-size: 80px;
+    }
+
+    &__subtitle
+    {
+        font-size: 60px;
+    }
+
+    &__cover
+    {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 5;
+
+        width: 100%;
+        height: 510px;
+
+        background: #fff; // TODO: change to VALORANT red
+
+        &:after
+        {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.75));
+        }
+
+        img
+        {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.navbar
+{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    width: 100%;
+    padding: 20px 0 18px 0;
+
+    background: #ccc;
+
+    &__link
+    {
+        margin-right: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 24px;
+        color: #333;
+
+        a
+        {
+            @include a(#333, none, #333, none, #111, none);
+        }
+    }
+
+    &__link:hover
+    {
+        border-bottom: 1px solid #666;
+    }
+
+    &__link:active
+    {
+        border-bottom: 1px solid #111;
+    }
+
+    &__link--active
+    {
+        border-bottom: 2px solid #333;
+
+        &:hover, &:active
+        {
+            border-bottom: 2px solid #333;
+        }
+    }
+
+    &__link:last-child
+    {
+        margin-right: 0;
+    }
+}
+
+.page
+{
+    width: 95%;
+    min-height: 400px;
+    padding: 10px 2.5%;
+
+    background: #EEEEEE;
+}
+
+.page--competitors
+{
+    display: flex;
+    flex-wrap: wrap;
+
+    .profile
+    {
+        flex: 1 0 25%;
+
+        margin: 10px;
+        padding: 10px;
+
+        border: 1px solid #666;
+
+        background: #fff;
+
+        font-family: Arial, Helvetica, sans-serif;
+        color: #333;
+
+        &__name
+        {
+            margin-bottom: 10px;
+
+            font-size: 48px;
+            text-align: center;
+        }
+
+        &__tagline
+        {
+            min-height: 64px;
+            margin-bottom: 10px;
+
+            font-size: 20px;
+            text-align: center;
+        }
+
+        &__socials
+        {
+            display: table;
+            margin: 0 auto;
+
+            .logo, .text
+            {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .logo
+            {
+                width: 24px;
+                height: 24px;
+
+                margin-right: 8px;
+
+                img
+                {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .text
+            {
+                font-size: 18px;
+
+                a
+                {
+                    @include a(#333, none, #333, underline, #111, none);
+                }
+            }
+
+            &--twitter
+            {
+                .logo
+                {
+                    width: 28px;
+                    height: 28px;
+
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}
+
+.page--bracket
+{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    .bracket-col
+    {
+        margin-right: 75px;
+    }
+}
+
+.bracket
+{
+    margin: 0 0 48px 0;
+
+    &:last-child
+    {
+        margin: 0;
+    }
+
+    &__box
+    {
+        margin: 15px 0;
+
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+
+        .competitor
+        {
+            display: inline-block;
+            vertical-align: top;
+            min-width: 100px;
+            height: 18px;
+            padding: 10px;
+
+            border-right: 2px solid #666;
+
+            background: #FDFAFA;
+        }
+
+        .score
+        {
+            display: inline-block;
+            vertical-align: top;
+            width: 18px;
+            height: 18px;
+            padding: 10px;
+
+            background: #FDFAFA;
+
+            text-align: center;
+
+            &--loser
+            {
+                background: #ccc;
+            }
+
+            &--winner
+            {
+                background: #ccc;
+            }
+        }
+
+        &--winner
+        {
+            .competitor
+            {
+                border-right: none;
+            }
+
+            .score
+            {
+                background: #2ea44f;
+                color: #fff;
+            }
+        }
+
+        &--loser
+        {
+            .competitor
+            {
+                border-right: none;
+            }
+
+            .score
+            {
+                background: #cb2431;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.footer
+{
+    width: 95%;
+
+    padding: 10px 2.5%;
+
+    font-family: Arial, Helvetica, sans-serif;
+    color: #111111;
+    
+    background: #625A5A;
+
+    div
+    {
+        margin-bottom: 10px;
+
+        text-align: center;
+
+        a
+        {
+            @include a(#111111, underline, #111111, none, #000000, none);
+        }
+    }
+
+    div:last-child
+    {
+        margin: 0;
+    }
+}
