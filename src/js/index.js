@@ -273,7 +273,7 @@ function onReady()
             {navbar}
         </>);
     dom_enqueue(document.querySelector(".footer"),
-        <Footer blockName="footer" srclink="#" />);
+        <Footer blockName="footer" srclink="https://github.com/Ghifari160/tournament" />);
 
     if(document.querySelector("body").dataset.id == "bracket")
         loadJSON("/bracket.json", renderBracket);

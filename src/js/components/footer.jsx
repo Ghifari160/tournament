@@ -46,7 +46,7 @@ class Footer extends React.Component
             </div>
 
             <div className={this.state.bem_disclaimer.getElementClassName()}>
-                Header image created by <a href="#">pumpedupbricks</a>.
+                Header image created by <a href="https://twitter.com/pumpedupbricks">pumpedupbricks</a>.
             </div>
 
             <div className={this.state.bem_disclaimer.getElementClassName()}>
