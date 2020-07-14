@@ -15,22 +15,43 @@ class NavbarLink extends React.Component
         bem.createElement("link");
         bem.addElementModifiers(this.props.elementModifiers);
 
+        this.link_clickHandler = this.link_clickHandler.bind(this);
+
         this.state =
         {
-            bem: bem
+            bem: bem,
+            externalLink: this.props.externalLink
         };
+    }
+
+    link_clickHandler(event)
+    {
+        if(!this.state.externalLink)
+        {
+            this.props.pageLoader(this.props.pageId);
+
+            event.preventDefault();
+        }
+        else
+            console.log("Link is external");
     }
 
     render_innerElement()
     {
+
         if(this.props.url.length > 0)
-            return <a href={this.props.url}>{this.props.text}</a>;
+            return <a href={this.props.url} onClick={this.link_clickHandler}>{this.props.text}</a>;
         else
             return this.props.text;
     }
 
     render()
     {
+        if(this.props.active)
+            this.state.bem.addElementModifier("active");
+        else
+            this.state.bem.removeElementModifier("active");
+
         return <>
             <div className={this.state.bem.getElementClassName()}>
                 {this.render_innerElement()}
@@ -44,7 +65,9 @@ NavbarLink.defaultProps =
     blockModifiers: [],
     elementModifiers: [],
     url: "",
-    externalLink: false
+    externalLink: false,
+    pageLoader: function(){ window.location.href = this.props.url }.bind(this),
+    active: false
 };
 
 NavbarLink.propTypes =
@@ -54,7 +77,10 @@ NavbarLink.propTypes =
     elementModifiers: PropTypes.arrayOf(PropTypes.string),
     text: PropTypes.string.isRequired,
     url: PropTypes.string,
-    externalLink: PropTypes.bool
+    externalLink: PropTypes.bool,
+    pageLoader: PropTypes.func,
+    active: PropTypes.bool,
+    pageId: PropTypes.string.isRequired
 };
 
 export default NavbarLink;

@@ -58,7 +58,7 @@ Header.propTypes =
 {
     blockName: PropTypes.string.isRequired,
     blockModifiers: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     subtitle: PropTypes.string
 };
 

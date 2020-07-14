@@ -121,12 +121,18 @@ body
     padding: 10px 2.5%;
 
     background: #EEEEEE;
+
+    display: none;
 }
 
 .page--competitors
 {
-    display: flex;
     flex-wrap: wrap;
+
+    &.page--active
+    {
+        display: flex;
+    }
 
     .profile
     {
@@ -141,6 +147,12 @@ body
 
         font-family: Arial, Helvetica, sans-serif;
         color: #333;
+
+        &--placeholder
+        {
+            border: none;
+            background: #dedede;
+        }
 
         &__name
         {
@@ -210,10 +222,14 @@ body
 
 .page--bracket
 {
-    display: flex;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+
+    &.page--active
+    {
+        display: flex;
+    }
 
     .bracket-col
     {
@@ -270,6 +286,23 @@ body
             &--winner
             {
                 background: #ccc;
+            }
+        }
+
+        &--placeholder
+        {
+            .competitor, .score
+            {
+                border: none;
+                background: #dedede;
+            }
+
+            .score
+            {
+                &--loser, &--winner
+                {
+                    background: #dedede;
+                }
             }
         }
 

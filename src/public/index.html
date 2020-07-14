@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<title>${TOURNAMENT.FULLNAME}</title>
+<script>
+${NAVBAR.DATA}
+</script>
+</head>
+
+<body data-id="${REQUEST.PATH}" data-apiurl="${CONFIG.APIURL}">
+<header class="header">
+        <div class="header__title">${TOURNAMENT.ORGANIZATION.NAME}</div>
+        <div class="header__subtitle">${TOURNAMENT.NAME}</div>
+        <div class="header__cover">
+                <img src="/assets/images/header.jpg">
+        </div>
+</header>
+
+<navbar class="navbar"></navbar>
+
+<section class="page page--${REQUEST.PATH} page--active"></section>
+
+<footer class="footer">${FOOTER}</footer>
+</body>
+</html>

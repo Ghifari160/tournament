@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Header from "./components/header.jsx";
 import Navbar from "./components/navbar.jsx";
 import NavbarLink from "./components/navbar-link.jsx";
-import Footer from "./components/footer.jsx";
 
-import Bracket from "./components/bracket.jsx";
 import BracketBox from "./components/bracket-box.jsx";
+import BracketBoxPlaceholder from "./components/bracket-box-placehoder.jsx";
+
 import Profile from "./components/profile.jsx";
+import ProfilePlaceholder from "./components/profile-placeholder.jsx";
 
 import "../style/index.scss";
 
@@ -70,7 +70,7 @@ function loadJSON(url, callback)
     xobj.send(null);
 }
 
-var __bracket = "",
+let __bracket = "",
     __competitors = "";
 
 function renderBracket(json)
@@ -134,7 +134,7 @@ function renderBracket(json)
             semifinals.push(<div className={"bracket bracket--sf" + i} key={"sf" + i}>
                 <BracketBox blockName="bracket"
                         competitor={bracket.semifinals[i].competitor1}
-                        score={bracket.semifinals[i].score}
+                        score={bracket.semifinals[i].score1}
                         isWinner={true}
                         isCompleted={bracket.semifinals[i].isCompleted} />
             </div>);
@@ -164,7 +164,7 @@ function renderBracket(json)
             final.push(<div className={"bracket bracket--f" + i} key={"f" + i}>
                 <BracketBox blockName="bracket"
                         competitor={bracket.final[i].competitor1}
-                        score={bracket.final[i].score}
+                        score={bracket.final[i].score1}
                         isWinner={true}
                         isCompleted={bracket.final[i].isCompleted} />
             </div>);
@@ -194,14 +194,19 @@ function renderBracket(json)
             podium.push(<div className={"bracket bracket--p" + i} key={"p" + i}>
                 <BracketBox blockName="bracket"
                         competitor={bracket.podium[i].competitor1}
-                        score={bracket.podium[i].score}
+                        score={bracket.podium[i].score1}
                         isWinner={true}
                         isCompleted={bracket.podium[i].isCompleted} />
             </div>);
         }
     }
 
-    dom_enqueue(document.querySelector(".page--bracket"),
+    if(__bracket != json)
+    {
+        __bracket = json;
+        domu_enqueue(document.querySelector(".page--bracket"));
+
+        dom_enqueue(document.querySelector(".page--bracket"),
         <>
             <div className="bracket-col bracket-col--qualifiers">
                 {qualifiers}
@@ -216,12 +221,67 @@ function renderBracket(json)
                 {podium}
             </div>
         </>);
-
-    if(__bracket != json)
-    {
-        __bracket = json;
-        domu_enqueue(document.querySelector(".page--bracket"));
     }
+}
+
+function renderBracket__Placeholder(num = 4)
+{
+    // let q, sf, f, p = [];
+    let q = [],
+        sf = [],
+        f = [],
+        p = [];
+
+    // Qualifiers
+    for(let i = 0; i < num; i++)
+    {
+        q.push(<div className={"bracket bracket--q-" + i} key={"q-" + i}>
+            <BracketBoxPlaceholder blockName="bracket" />
+            <BracketBoxPlaceholder blockName="bracket" />
+        </div>);
+    }
+
+    // Semifinals
+    for(let i = 0; i < (num / 2); i++)
+    {
+        sf.push(<div className={"bracket bracket--sf-" + i} key={"sf-" + i}>
+            <BracketBoxPlaceholder blockName="bracket" />
+            <BracketBoxPlaceholder blockName="bracket" />
+        </div>);
+    }
+
+    // Finals
+    for(let i = 0; i < (num / 4); i++)
+    {
+        f.push(<div className={"bracket bracket--f-" + i} key={"f-" + i}>
+            <BracketBoxPlaceholder blockName="bracket" />
+            <BracketBoxPlaceholder blockName="bracket" />
+        </div>);
+    }
+
+    // Podiums
+    for(let i = 0; i < (num / 4); i++)
+    {
+        p.push(<div className={"bracket bracket--p-" + i} key={"p-" + i}>
+            <BracketBoxPlaceholder blockName="bracket" />
+        </div>);
+    }
+
+    dom_enqueue(document.querySelector(".page--bracket"),
+        <>
+            <div className="bracket-col bracket-col--qualifiers">
+                {q}
+            </div>
+            <div className="bracket-col bracket-col--semifinals">
+                {sf}
+            </div>
+            <div className="bracket-col bracket-col--final">
+                {f}
+            </div>
+            <div className="bracket-col bracket-col--podium">
+                {p}
+            </div>
+        </>);
 }
 
 function renderCompetitors(json)
@@ -238,57 +298,114 @@ function renderCompetitors(json)
                 twitchUsername={competitors.profiles[i].twitch} />);
     }
 
-    dom_enqueue(document.querySelector(".page--competitors"),
-        <>
-            {q}
-        </>);
-
     if(__competitors != json)
     {
         __competitors = json;
         domu_enqueue(document.querySelector(".page--competitors"));
+        dom_enqueue(document.querySelector(".page--competitors"),
+        <>
+            {q}
+        </>);
     }
 }
 
+function renderCompetitors__Placeholder(num = 6)
+{
+    let q = [];
+
+    for(let i = 0; i < num; i++)
+        q.push(<ProfilePlaceholder blockName={"profile"} key={"profile-placeholder-" + i} />);
+    
+    dom_enqueue(document.querySelector(".page--competitors"),
+        <>
+            {q}
+        </>);
+}
+
+function loadPage_bracket(replaceState = false)
+{
+    __bracket = "";
+
+    document.querySelector("body").dataset.id = "bracket";
+
+    document.querySelector(".page").classList.remove("page--competitors");
+    document.querySelector(".page").classList.add("page--bracket");
+    
+    renderBracket__Placeholder();
+    dom_renderQueue();
+
+    loadJSON(`${document.querySelector("body").dataset.apiurl}/bracket`, renderBracket);
+
+    __navbar.current.setState({ activeId: "bracket" });
+
+    if(!replaceState)
+        window.history.pushState({ pageId: "bracket" }, "", "/bracket");
+    else
+        window.history.replaceState({ pageId: "bracket"}, "", "/bracket");
+}
+
+function loadPage_competitors(replaceState = false)
+{
+    __competitors = "";
+
+    document.querySelector("body").dataset.id = "competitors";
+    
+    document.querySelector(".page").classList.remove("page--bracket");
+    document.querySelector(".page").classList.add("page--competitors");
+    
+    renderCompetitors__Placeholder();
+    dom_renderQueue();
+
+    loadJSON(`${document.querySelector("body").dataset.apiurl}/competitors`, renderCompetitors);
+    
+    __navbar.current.setState({ activeId: "competitors" });
+    
+    if(!replaceState)
+        window.history.pushState({ pageId: "competitors" }, "", "/competitors");
+    else
+        window.history.replaceState({ pageId: "competitors"}, "", "/competitors");
+}
+
+function loadPage(id, replaceState = false)
+{
+    switch(id)
+    {
+        case "bracket":
+            loadPage_bracket(replaceState);
+            break;
+
+        case "competitors":
+            loadPage_competitors(replaceState);
+            break;
+        
+        default:
+            console.error(`Invalid page id: ${id}`);
+    }
+}
+
+let __navbar = React.createRef();
+
 function onReady()
 {
-    let navbar = [];
+    dom_enqueue(document.querySelector(".navbar"), <Navbar ref={__navbar} blockName="navbar" config={window.__navbar} pageLoader={loadPage} />);
 
-    navbar.push(<NavbarLink blockName="navbar" key="bracket"
-            elementModifiers={(document.querySelector("body").dataset.id == "bracket") ? [ "active" ] : []}
-            text="Bracket"
-            url="/bracket" />);
-    navbar.push(<NavbarLink blockName="navbar" key="competitors"
-            elementModifiers={(document.querySelector("body").dataset.id == "competitors") ? [ "active" ] : []}
-            text="Competitors"
-            url="/competitors" />);
-    navbar.push(<NavbarLink blockName="navbar" key="live-stream"
-            text="Live Stream"
-            url="https://twitch.tv/senatorderosa" />);
-
-    dom_enqueue(document.querySelector(".header"),
-        <Header blockName="header" title="The New Manhattan" subtitle="Mod Tournament" />);
-    dom_enqueue(document.querySelector(".navbar"),
-        <>
-            {navbar}
-        </>);
-    dom_enqueue(document.querySelector(".footer"),
-        <Footer blockName="footer" srclink="https://github.com/Ghifari160/tournament" />);
+    window.addEventListener("popstate", (event) =>
+    {
+        loadPage(event.state.pageId, true);
+    });
 
     if(document.querySelector("body").dataset.id == "bracket")
-        loadJSON("/bracket.json", renderBracket);
+        loadPage_bracket(true);
     else if(document.querySelector("body").dataset.id == "competitors")
-        loadJSON("/competitors.json", renderCompetitors);
-
-    dom_renderQueue();
+        loadPage_competitors(true);
 
     setInterval(function()
     {
         if(document.querySelector("body").dataset.id == "bracket")
-            loadJSON("/bracket.json", renderBracket);
+            loadJSON(`${document.querySelector("body").dataset.apiurl}/bracket`, renderBracket);
         else if(document.querySelector("body").dataset.id == "competitors")
-            loadJSON("/competitors.json", renderCompetitors);
-    }, 5000);
+            loadJSON(`${document.querySelector("body").dataset.apiurl}/competitors`, renderCompetitors);
+    }, 60000);
 
     setInterval(function()
     {

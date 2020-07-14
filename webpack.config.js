@@ -1,10 +1,15 @@
 const path = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: "./src/js/index.js",
+    entry: {
+        public: "./src/public/js/index.js",
+        admin: "./src/admin/js/index.js"
+    },
     output: {
-        filename: "app.js",
+        filename: "[name]/app.bundle.js",
         path: path.resolve(__dirname, "dist")
     },
     module: {
@@ -32,8 +37,19 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebPackPlugin({
+            template: "./src/public/index.html",
+            filename: "public/index.html",
+            chunks: [ "public" ]
+        }),
+        // new HtmlWebPackPlugin({
+        //     template: "./src/admin/index.html",
+        //     filename: "admin/index.html",
+        //     chunks: [ "admin" ]
+        // }),
         new CopyPlugin([
-            { from: "./src", to: "./" }
+            { from: "src/common/assets", to: "common/assets" }
         ])
     ]
 };
