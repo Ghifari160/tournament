@@ -10,7 +10,31 @@ const default_bracket =
             mode: "comp",
             competitor1: "Competitor 1",
             competitor2: "Competitor 2",
-            score1: 11,
+            score1: 4,
+            score2: 13,
+            isCompleted: true
+        },
+        {
+            mode: "comp",
+            competitor1: "Competitor 3",
+            competitor2: "Competitor 4",
+            score1: 13,
+            score2: 3,
+            isCompleted: true
+        },
+        {
+            mode: "comp",
+            competitor1: "Competitor 5",
+            competitor2: "Competitor 6",
+            score1: 5,
+            score2: 13,
+            isCompleted: true
+        },
+        {
+            mode: "comp",
+            competitor1: "Competitor 7",
+            competitor2: "Competitor 8",
+            score1: 12,
             score2: 13,
             isCompleted: true
         }
@@ -18,18 +42,26 @@ const default_bracket =
     semifinals: [
         {
             mode: "comp",
-            competitor1: "Competitor 1",
-            competitor2: "Competitor 2",
+            competitor1: "Competitor 2",
+            competitor2: "Competitor 3",
+            score1: 12,
+            score2: 13,
+            isCompleted: true
+        },
+        {
+            mode: "comp",
+            competitor1: "Competitor 6",
+            competitor2: "Competitor 8",
             score1: 13,
-            score2: 11,
+            score2: 10,
             isCompleted: true
         }
     ],
     final: [
         {
             mode: "comp",
-            competitor1: "Competitor 1",
-            competitor2: "Competitor 2",
+            competitor1: "Competitor 3",
+            competitor2: "Competitor 8",
             score1: 0,
             score2: 0,
             isCompleted: false
@@ -59,6 +91,48 @@ const default_competitors =
         {
             id: "comp2",
             name: "Competitor 2",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp3",
+            name: "Competitor 3",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp4",
+            name: "Competitor 4",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp5",
+            name: "Competitor 5",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp6",
+            name: "Competitor 6",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp7",
+            name: "Competitor 7",
+            taglines: "Taglines",
+            twitter: "username",
+            twitch: "username"
+        },
+        {
+            id: "comp8",
+            name: "Competitor 8",
             taglines: "Taglines",
             twitter: "username",
             twitch: "username"

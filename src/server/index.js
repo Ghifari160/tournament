@@ -46,7 +46,6 @@ if(config.server.dev)
 
 dataGenerator.generate_defaultData();
 
-config.rendered.navbar = generator.generate_navbar(config.navbar);
 config.rendered.footer = generator.generate_footer(config);
 
 http.createServer((req, res) =>

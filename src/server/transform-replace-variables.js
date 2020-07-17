@@ -21,14 +21,16 @@ class Transform_ReplaceVariables
     {
         let c = chunk.toString();
         c = c.replace(/\$\{REQUEST\.PATH\}/g, this.pageId);
+        
         c = c.replace(/\$\{CONFIG\.APIURL\}/g, this.config.api.url);
-        c = c.replace(/\$\{TOURNAMENT\.ORGANIZATION\.NAME\}/g, this.config.tournament.organization.name);
-        c = c.replace(/\$\{TOURNAMENT\.NAME\}/g, this.config.tournament.name);
-        c = c.replace(/\$\{TOURNAMENT\.FULLNAME\}/g, `${this.config.tournament.organization.name} ${this.config.tournament.name}`);
-        c = c.replace(/\$\{FOOTER\}/g, this.config.rendered.footer);
-        c = c.replace(/\$\{NAVBAR\}/g, this.config.rendered.navbar);
 
         c = c.replace(/\$\{NAVBAR\.DATA\}/g, `window.__navbar = ${JSON.stringify(this.config.navbar)};`);
+        
+        c = c.replace(/\$\{TOURNAMENT\.FULLNAME\}/g, `${this.config.tournament.organization.name} ${this.config.tournament.name}`);
+        c = c.replace(/\$\{TOURNAMENT\.NAME\}/g, this.config.tournament.name);
+        c = c.replace(/\$\{TOURNAMENT\.ORGANIZATION\.NAME\}/g, this.config.tournament.organization.name);
+
+        c = c.replace(/\$\{FOOTER\}/g, this.config.rendered.footer);
 
         this.push(c);
         cb();
