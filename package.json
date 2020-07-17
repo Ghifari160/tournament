@@ -1,13 +1,19 @@
 {
   "name": "up-2020062401",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Interactive bracket for the New Manhattan Mod Tournament",
   "author": "GHIFARI160",
-  "license": "NO LICENSE",
+  "license": "",
   "scripts": {
     "start": "node src/server",
     "wds-start": "webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+
+    "build:webpack": "webpack --mode production",
+    "build:rmsrc": "rm -r src/{admin,common,public}",
+    "build": "npm run build:webpack && npm run build:rmsrc"
+  },
+  "bin": {
+    "tournament": "./src/server"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
