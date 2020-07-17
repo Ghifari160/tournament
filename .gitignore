@@ -4,3 +4,6 @@ data/
 
 .DS_Store
 Thumbs.db
+
+config.json
+api.spec.json
