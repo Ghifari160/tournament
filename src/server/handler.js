@@ -87,19 +87,45 @@ function __handle_fileReq(path, pageId, config, req, res, exec_start, cacheContr
 
 function handle_api(path, config, req, res, exec_start)
 {
-    if(config.api.enabled)
+    let success = true;
+
+    switch(path)
     {
-        switch(path)
-        {
-            case `${config.api.path}/bracket`:
-                __handle_fileReq("data/bracket.json", "api/bracket", config, req, res, exec_start, 150);
-                break;
-            
-            case `${config.api.path}/competitors`:
-                __handle_fileReq("data/competitors.json", "api/competitors", config, req, res, exec_start, 150);
-                break;
-        }
+        case `${config.api.path}/bracket`:
+            __handle_fileReq("data/bracket.json", "api/bracket", config, req, res, exec_start, 150);
+            break;
+        
+        case `${config.api.path}/competitors`:
+            __handle_fileReq("data/competitors.json", "api/competitors", config, req, res, exec_start, 150);
+            break;
+
+        default:
+            success = false;
     }
+
+    return success;
+}
+
+function handle_public(path, config, req, res, exec_start)
+{
+    let success = true;
+
+    switch(path)
+    {
+        case `${(config.public.path == "") ? "/" : config.public.path}`:
+        case `${config.public.path}/bracket`:
+            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "bracket", config, req, res, exec_start);
+            break;
+        
+        case `${config.public.path}/competitors`:
+            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "competitors", config, req, res, exec_start);
+            break;
+        
+        default:
+            success = false;
+    }
+
+    return success;
 }
 
 function handle_default(path, config, req, res, exec_start)
@@ -107,9 +133,9 @@ function handle_default(path, config, req, res, exec_start)
     let regex = RegExp(/^\/assets\/(.*)/g);
 
     if(regex.test(path))
-        __handle_fileReq(`dist/common${path}`, path, config, req, res, exec_start);
+        __handle_fileReq(`${config.server.doc_root}/common${path}`, path, config, req, res, exec_start);
     else
-        __handle_fileReq(`dist${path}`, path, config, req, res, exec_start);
+        __handle_fileReq(`${config.server.doc_root}${path}`, path, config, req, res, exec_start);
 }
 
 function handle_routing(config, req, res)
@@ -118,19 +144,16 @@ function handle_routing(config, req, res)
 
     switch(req.url)
     {
-        case "/":
-        case "/bracket":
-            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "bracket", config, req, res, exec_start);
-            break;
-        
-        case "/competitors":
-            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "competitors", config, req, res, exec_start);
-            break;
+        case `${config.public.path}`:
+        case `${config.public.path}/bracket`:
+        case `${config.public.path}/competitors`:
+            if(config.public.enabled && handle_public(req.url, config, req, res, exec_start))
+                break;
         
         case `${config.api.path}/bracket`:
         case `${config.api.path}/competitors`:
-            handle_api(req.url, config, req, res, exec_start);
-            break;
+            if(config.api.enabled && handle_api(req.url, config, req, res, exec_start))
+                break;
 
         default:
             handle_default(req.url, config, req, res, exec_start);

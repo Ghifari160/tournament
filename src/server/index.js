@@ -27,9 +27,14 @@ config.app =
     version: package.version
 };
 
+config.api.path = (config.api.path == "/") ? "" : config.api.path;
+config.admin.path = (config.admin.path == "/") ? "" : config.admin.path;
+config.public.path = (config.public.path == "/") ? "" : config.public.path;
+
 config.rendered = {};
 
-log(LOG_LEVEL.INFO, `URL: ${config.url}`);
+log(LOG_LEVEL.INFO, `URL: ${config.public.url}`);
+log(LOG_LEVEL.INFO, `Backend: ${(config.public.enabled) ? "Enabled" : "Disabled"}`);
 
 log(LOG_LEVEL.INFO, `Admin URL: ${config.admin.url}`);
 log(LOG_LEVEL.INFO, `Admin Backend: ${(config.admin.enabled) ? "Enabled" : "Disabled"}`);

@@ -2,6 +2,67 @@ const fs = require("fs");
 
 const { LOG_LEVEL, log } = require("./log.js");
 
+const default_config =
+{
+    version: "0.2.0",
+    api:
+    {
+        enabled: true,
+        path: "/api",
+        url: "http://localhost:8080/api"
+    },
+    admin:
+    {
+        enabled: true,
+        path: "/admin",
+        url: "http://localhost:8080/admin"
+    },
+    public:
+    {
+        enabled: true,
+        path: "/",
+        url: "http://localhost:8080/"
+    },
+    server:
+    {
+        dev: false,
+        listen_port: "8080"
+    },
+    tournament:
+    {
+        organization:
+        {
+            name: "Organization"
+        },
+        name: "Tournament"
+    },
+    navbar:
+    {
+        primary: "bracket",
+        links: [
+            {
+                id: "bracket",
+                text: "Bracket",
+                url: "/bracket",
+                external: false
+            },
+            {
+                id: "competitors",
+                text: "Competitors",
+                url: "/competitors",
+                external: false
+            }
+        ]
+    },
+    footer:
+    {
+        copyright: "&copy; 2020 [Organization](http://localhost:8080)",
+        extra: [
+            "Extra disclaimer can be inserted into this array"
+        ]
+    }
+};
+
 const default_bracket =
 {
     version: "1",
@@ -140,6 +201,11 @@ const default_competitors =
     ]
 };
 
+function __configExists()
+{
+    return fs.existsSync("config.json");
+}
+
 function __directoryExists()
 {
     return fs.existsSync("data");
@@ -153,6 +219,11 @@ function __bracketExists()
 function __competitorsExist()
 {
     return fs.existsSync("data/competitors.json");
+}
+
+function __write_defaultConfig()
+{
+    fs.writeFileSync("config.json", JSON.stringify(default_config, null, 4));
 }
 
 function __write_defaultBracket()
@@ -169,6 +240,12 @@ function generate_defaultData()
 {
     let exec_start = new Date(),
         count = 0;
+
+    if(!__competitorsExist())
+    {
+        __write_defaultConfig();
+        count++;
+    }
 
     if(!__directoryExists())
     {
@@ -189,7 +266,7 @@ function generate_defaultData()
     }
     
     if(count > 0)
-        log(LOG_LEVEL.INFO, `Default data genereted in ${new Date() - exec_start}ms`);
+        log(LOG_LEVEL.INFO, `Default data generated in ${new Date() - exec_start}ms`);
 }
 
 module.exports =
