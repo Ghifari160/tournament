@@ -334,7 +334,7 @@ function loadPage_bracket(replaceState = false)
     renderBracket__Placeholder();
     dom_renderQueue();
 
-    loadJSON(`${document.querySelector("body").dataset.apiurl}/bracket`, renderBracket);
+    loadJSON(`${__apiUrl}/bracket`, renderBracket);
 
     __navbar.current.setState({ activeId: "bracket" });
 
@@ -356,7 +356,7 @@ function loadPage_competitors(replaceState = false)
     renderCompetitors__Placeholder();
     dom_renderQueue();
 
-    loadJSON(`${document.querySelector("body").dataset.apiurl}/competitors`, renderCompetitors);
+    loadJSON(`${__apiUrl}/competitors`, renderCompetitors);
     
     __navbar.current.setState({ activeId: "competitors" });
     
@@ -383,10 +383,15 @@ function loadPage(id, replaceState = false)
     }
 }
 
-let __navbar = React.createRef();
+let __apiUrl, __navbar;
 
 function onReady()
 {
+    __apiUrl = document.querySelector("body").dataset.apiurl;
+    __apiUrl = (__apiUrl.substring(__apiUrl.length - 1) == "/") ? __apiUrl.substring(0, __apiUrl.length - 1) : __apiUrl;
+
+    __navbar = React.createRef();
+
     dom_enqueue(document.querySelector(".navbar"), <Navbar ref={__navbar} blockName="navbar" config={window.__navbar} pageLoader={loadPage} />);
 
     window.addEventListener("popstate", (event) =>
@@ -402,9 +407,9 @@ function onReady()
     setInterval(function()
     {
         if(document.querySelector("body").dataset.id == "bracket")
-            loadJSON(`${document.querySelector("body").dataset.apiurl}/bracket`, renderBracket);
+            loadJSON(`${__apiUrl}/bracket`, renderBracket);
         else if(document.querySelector("body").dataset.id == "competitors")
-            loadJSON(`${document.querySelector("body").dataset.apiurl}/competitors`, renderCompetitors);
+            loadJSON(`${__apiUrl}/competitors`, renderCompetitors);
     }, 60000);
 
     setInterval(function()
