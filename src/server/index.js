@@ -55,3 +55,4 @@ http.createServer((req, res) =>
 
 log(LOG_LEVEL.INFO, `Server listening on port ${config.server.listen_port}`);
 log(LOG_LEVEL.INFO, `Took ${new Date() - exec_start}ms`);
+log(LOG_LEVEL.INFO, `Press Ctrl-C to stop`);

@@ -120,11 +120,11 @@ function handle_routing(config, req, res)
     {
         case "/":
         case "/bracket":
-            __handle_fileReq("dist/public/index.html", "bracket", config, req, res, exec_start);
+            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "bracket", config, req, res, exec_start);
             break;
         
         case "/competitors":
-            __handle_fileReq("dist/public/index.html", "competitors", config, req, res, exec_start);
+            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "competitors", config, req, res, exec_start);
             break;
         
         case `${config.api.path}/bracket`:
