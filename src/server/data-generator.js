@@ -26,7 +26,8 @@ const default_config =
     server:
     {
         dev: false,
-        listen_port: "8080"
+        listen_port: "8080",
+        doc_root: "./dist"
     },
     tournament:
     {
