@@ -4,6 +4,8 @@ UP-2020062401 (a better name is in the works) is tournament management app. It i
 and, at the moment, only the bracket and competitors page are working. The public interface footer
 and navigation bars are both configurable with Markdown support.
 
+You can see this project in action [here](https://tournament.ghifari160.com/).
+
 ## Installation
 
 Ensure that Node.JS is installed. If not, you can download it [here](https://nodejs.org/en/).
@@ -29,6 +31,10 @@ You can configure the bracket data by modifying `data/bracket.json` and the comp
 modifying `data/competitors.json`. The public web interface header, navigation bar, and footer are
 configurable in `config.json`. Changes to `config.json` will not apply until a server restart,
 whereas changes to `data/bracket.json` and `data/competitors.json` applies instantly.
+
+**Important:** The server included in this project is not intended to run behind a reverse proxy like
+[NGINX](https://www.nginx.com/). If you choose to run this server without a reverse proxy, you may do
+so at your own risk.
 
 ## Contributing
 
