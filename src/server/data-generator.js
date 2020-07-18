@@ -241,7 +241,7 @@ function generate_defaultData()
     let exec_start = new Date(),
         count = 0;
 
-    if(!__competitorsExist())
+    if(!__configExists())
     {
         __write_defaultConfig();
         count++;

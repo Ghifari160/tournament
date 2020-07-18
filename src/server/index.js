@@ -17,6 +17,8 @@ const color = require("./color.js"),
 
 const exec_start = new Date();
     
+dataGenerator.generate_defaultData();
+
 const configStr = fs.readFileSync("config.json", { encoding: "utf8" }),
       packageStr = fs.readFileSync("package.json", { encoding: "utf8" });
     
@@ -50,8 +52,6 @@ if(config.server.dev)
 
     watcher();
 }
-
-dataGenerator.generate_defaultData();
 
 config.rendered.footer = generator.generate_footer(config);
 
