@@ -39,8 +39,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebPackPlugin({
-            template: "./src/public/index.html",
-            filename: "public/index.html",
+            template: "./src/public/app.html",
+            filename: "public/app.html",
             chunks: [ "public" ]
         }),
         // new HtmlWebPackPlugin({

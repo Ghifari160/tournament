@@ -29,9 +29,9 @@ config.app =
     version: package.version
 };
 
-config.api.path = (config.api.path == "/") ? "" : config.api.path;
-config.admin.path = (config.admin.path == "/") ? "" : config.admin.path;
-config.public.path = (config.public.path == "/") ? "" : config.public.path;
+config.api.path = (config.api.path.substring(config.api.path.length - 1) == "/") ? config.api.path.substring(0, config.api.path.length - 1) : config.api.path;
+config.admin.path = (config.admin.path.substring(config.admin.path.length - 1) == "/") ? config.admin.path.substring(0, config.admin.path.length - 1) : config.admin.path;
+config.public.path = (config.public.path.substring(config.public.path.length - 1) == "/") ? config.public.path.substring(0, config.public.path.length - 1) : config.public.path;
 
 config.rendered = {};
 

@@ -114,11 +114,11 @@ function handle_public(path, config, req, res, exec_start)
     {
         case `${(config.public.path == "") ? "/" : config.public.path}`:
         case `${config.public.path}/bracket`:
-            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "bracket", config, req, res, exec_start);
+            __handle_fileReq(`${config.server.doc_root}/public/app.html`, "bracket", config, req, res, exec_start);
             break;
         
         case `${config.public.path}/competitors`:
-            __handle_fileReq(`${config.server.doc_root}/public/index.html`, "competitors", config, req, res, exec_start);
+            __handle_fileReq(`${config.server.doc_root}/public/app.html`, "competitors", config, req, res, exec_start);
             break;
         
         default:
@@ -144,7 +144,7 @@ function handle_routing(config, req, res)
 
     switch(req.url)
     {
-        case `${config.public.path}`:
+        case `${(config.public.path == "") ? "/" : config.public.path}`:
         case `${config.public.path}/bracket`:
         case `${config.public.path}/competitors`:
             if(config.public.enabled && handle_public(req.url, config, req, res, exec_start))
