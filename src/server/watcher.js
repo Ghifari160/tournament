@@ -46,6 +46,8 @@ function watch()
         __watch(pathToWatch[i]);
     
     log(LOG_LEVEL.INFO, `Watching ${pathToWatch.length} directories`);
+
+    __webpack_build();
 }
 
 module.exports = watch;
