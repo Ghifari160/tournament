@@ -1,9 +1,13 @@
 {
-  "name": "up-2020062401",
+  "name": "tournament",
   "version": "0.2.0",
-  "description": "Interactive bracket for the New Manhattan Mod Tournament",
+  "description": "Simple tournament management",
   "author": "GHIFARI160",
   "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghifari160/tournament.git"
+  },
   "scripts": {
     "start": "node src/server",
     "wds-start": "webpack-dev-server --mode development",

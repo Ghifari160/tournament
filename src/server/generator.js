@@ -28,7 +28,7 @@ function generate_footer(config)
     for(let i = 0; i < config.footer.extra.length; i++)
         footer += `<div class="footer__disclaimer${i}">${marked(config.footer.extra[i])}</div>`;
     
-    footer += `<div class="footer__powered">${marked(`Powered by [UP-2020062401](https://github.com/Ghifari160/tournament) v${config.app.version}`)}</div>`;
+    footer += `<div class="footer__powered">${marked(`Powered by [Tournament](https://github.com/Ghifari160/tournament) v${config.app.version}`)}</div>`;
 
     log(LOG_LEVEL.INFO, `Footer generated in ${new Date() - exec_start}ms`);
 

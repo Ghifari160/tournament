@@ -1,6 +1,6 @@
-# UP-2020062401
+# Tournament
 
-UP-2020062401 (a better name is in the works) is tournament management app. It is work in progress
+Tournament (a better name is in the works) is tournament management app. It is work in progress
 and, at the moment, only the bracket and competitors page are working. The public interface footer
 and navigation bars are both configurable with Markdown support.
 
