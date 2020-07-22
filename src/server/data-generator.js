@@ -35,7 +35,8 @@ const default_config =
         {
             name: "Organization"
         },
-        name: "Tournament"
+        name: "Tournament",
+        cover: "/assets/images/header.jpg"
     },
     navbar:
     {
