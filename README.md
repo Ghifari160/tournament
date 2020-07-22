@@ -57,12 +57,6 @@ Install all dependencies for this project.
 npm i
 ```
 
-Build the web interfaces.
-
-``` shell
-npm run build:webpack
-```
-
 Run the server to generate the initial data.
 
 ``` shell
