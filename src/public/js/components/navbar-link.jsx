@@ -32,8 +32,6 @@ class NavbarLink extends React.Component
 
             event.preventDefault();
         }
-        else
-            console.log("Link is external");
     }
 
     render_innerElement()

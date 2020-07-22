@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Navbar from "./components/navbar.jsx";
-import NavbarLink from "./components/navbar-link.jsx";
 
 import BracketBox from "./components/bracket-box.jsx";
 import BracketBoxPlaceholder from "./components/bracket-box-placehoder.jsx";

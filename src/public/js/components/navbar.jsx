@@ -22,11 +22,6 @@ class Navbar extends React.Component
         };
     }
 
-    test(e)
-    {
-        console.log(e);
-    }
-
     render()
     {
         let links = [];
