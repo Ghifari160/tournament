@@ -44,8 +44,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: "app.css",
+            chunkFilename: "app.[id].css"
         }),
         new HtmlWebPackPlugin({
             template: "./app.html",

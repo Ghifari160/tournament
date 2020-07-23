@@ -4,19 +4,16 @@ const fs = require("fs"),
 const { LOG_LEVEL, log } = require("./log.js");
 
 const pathToWatch = [
-    "src/public/js/components",
-    "src/public/js/lib",
-    "src/public/js",
-    "src/public/style",
-    "src/public"
+    "src/admin",
+    "src/public",
+    "src/common"
 ];
 
-const webpack_path = "node_modules/.bin/webpack";
-const webpack_dev_args = "--mode development";
+const webpack = "npm run dev:webpack";
 
 function __webpack_build(exec_start = new Date())
 {
-    child_process.exec(`${webpack_path} ${webpack_dev_args}`, { cwd: process.cwd() }, (e, stdout, stderr) =>
+    child_process.exec(`${webpack}`, { cwd: process.cwd() }, (e, stdout, stderr) =>
     {
         if(e)
         {
@@ -40,12 +37,36 @@ function __watch(path)
     });
 }
 
+function __scan(path)
+{
+    let pathsToWatch = [],
+        pathsToScan = [];
+
+    if(fs.lstatSync(path).isDirectory())
+        pathsToScan = fs.readdirSync(path);
+
+    for(let i = 0; i < pathsToScan.length; i++)
+    {
+        if(`${path}/${pathsToScan[i]}`.match(/node_modules/g) == null && fs.lstatSync(`${path}/${pathsToScan[i]}`).isDirectory())
+            pathsToWatch = pathsToWatch.concat(__scan(`${path}/${pathsToScan[i]}`));
+    }
+
+    pathsToWatch.push(path);
+
+    return pathsToWatch;
+}
+
 function watch()
 {
+    let pathsToWatch = [];
+
     for(let i = 0; i < pathToWatch.length; i++)
-        __watch(pathToWatch[i]);
+        pathsToWatch = pathsToWatch.concat(__scan(pathToWatch[i]));
+
+    for(let i = 0; i < pathsToWatch.length; i++)
+        __watch(pathsToWatch[i]);
     
-    log(LOG_LEVEL.INFO, `Watching ${pathToWatch.length} directories`);
+    log(LOG_LEVEL.INFO, `Watching ${pathsToWatch.length} directories`);
 
     __webpack_build();
 }
