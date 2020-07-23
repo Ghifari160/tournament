@@ -19,8 +19,10 @@
     "build:webpack:common": "cd src/common && npm run build",
     "build:webpack": "npm run build:webpack:admin && npm run build:webpack:public && npm run build:webpack:common",
     "build:rmsrc": "rm -r src/{admin,common,public}",
-    "build:rmnode": "rm -rf node_modules",
-    "build": "npm run build:webpack && npm run build:rmsrc && npm run build:rmnode"
+    "build:rmnode:root": "rm -rf node_modules",
+    "build:rmnode:modules": "rm -rf src/{admin,public,common}/node_modules",
+    "build:rmnode": "npm run build:rmnode:modules && npm run build:rmnode:root",
+    "build": "npm run build:webpack && npm run build:rmnode && npm run build:rmsrc"
   },
   "bin": {
     "tournament": "./src/server"
