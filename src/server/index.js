@@ -48,7 +48,9 @@ log(LOG_LEVEL.INFO, `API Backend: ${(config.api.enabled) ? "Enabled" : "Disablee
 
 if(config.server.dev)
 {
-    log(LOG_LEVEL.INFO, "Development mode.");
+    log(LOG_LEVEL.WARN, "Server is running on development mode.");
+
+    process.env.NODE_ENV = "development";
 
     watcher();
 }
