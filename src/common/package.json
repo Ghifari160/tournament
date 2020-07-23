@@ -1,0 +1,40 @@
+{
+  "name": "up-2020072303",
+  "version": "0.3.0",
+  "description": "Tournament default common interface",
+  "author": "GHIFARI160",
+  "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghifari160/tournament.git"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "NODE_ENV=production webpack"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "fibers": "^4.0.1",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.12.0",
+    "prop-types": "^15.7.2",
+    "sass": "^1.22.12",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-lazy-load": "^3.0.13"
+  }
+}
