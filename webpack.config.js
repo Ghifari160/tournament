@@ -2,8 +2,12 @@ const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 module.exports = {
+    mode: isDevelopment ? "development" : "production",
     entry: {
         public: "./src/public/js/index.js",
         admin: "./src/admin/js/index.js"
@@ -24,12 +28,17 @@ module.exports = {
             {
                 test: /.scss$/,
                 use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" },
+                    isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: isDevelopment
+                        }
+                    },
                     {
                         loader: "sass-loader",
                         options: {
-                            implementation: require("node-sass")
+                            sourceMap: isDevelopment
                         }
                     }
                 ]
@@ -38,9 +47,15 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name]/app.css",
+            chunkFilename: "[id]/app.css"
+        }),
         new HtmlWebPackPlugin({
             template: "./src/public/app.html",
             filename: "public/app.html",
+            inject: "head",
+            scriptLoading: "defer",
             chunks: [ "public" ]
         }),
         // new HtmlWebPackPlugin({
