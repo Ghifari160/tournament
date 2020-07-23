@@ -10,8 +10,9 @@
   },
   "scripts": {
     "start": "node src/server",
-    "wds-start": "webpack-dev-server --mode development",
-    "build:webpack": "NODE_ENV=production webpack",
+    "build:webpack:admin": "cd src/admin && npm run build",
+    "build:webpack:public": "cd src/public && npm run build",
+    "build:webpack": "npm run build:webpack:admin && npm run build:webpack:public",
     "build:rmsrc": "rm -r src/{admin,common,public}",
     "build:rmnode": "rm -rf node_modules",
     "build": "npm run build:webpack && npm run build:rmsrc && npm run build:rmnode"
@@ -19,33 +20,11 @@
   "bin": {
     "tournament": "./src/server"
   },
-  "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
-    "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.0.4",
-    "css-loader": "^3.2.0",
-    "fibers": "^4.0.1",
-    "html-webpack-plugin": "^4.3.0",
-    "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.12.0",
-    "prop-types": "^15.7.2",
-    "sass": "^1.22.12",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.8",
-    "webpack-dev-server": "^3.8.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "marked": "^1.1.0",
     "mime-db": "^1.44.0",
     "mime-type": "^4.0.0",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-lazy-load": "^3.0.13",
     "semver": "^7.3.2"
   }
 }
