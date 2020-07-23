@@ -26,7 +26,11 @@ class Transform_ReplaceVariables
 
         c = c.replace(/\$\{NAVBAR\.DATA\}/g, `window.__navbar = ${JSON.stringify(this.config.navbar)};`);
         
-        c = c.replace(/\$\{TOURNAMENT\.FULLNAME\}/g, `${this.config.tournament.organization.name} ${this.config.tournament.name}`);
+        if(this.config.tournament.hasOwnProperty("fullname"))
+            c = c.replace(/\$\{TOURNAMENT\.FULLNAME\}/g, this.config.tournament.fullname);
+        else
+            c = c.replace(/\$\{TOURNAMENT\.FULLNAME\}/g, `${this.config.tournament.organization.name} ${this.config.tournament.name}`);
+        
         c = c.replace(/\$\{TOURNAMENT\.NAME\}/g, this.config.tournament.name);
 
         if(this.config.tournament.hasOwnProperty("cover"))
