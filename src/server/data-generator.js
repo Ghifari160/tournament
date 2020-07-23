@@ -197,7 +197,7 @@ function __sanitizeConfigObj_version(config)
 {
     // Released: v0.2.0
     // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
-    if(!config.hasOwnProperty("version") || semver.statisfies(config.version, "<0.3.0"))
+    if(!config.hasOwnProperty("version") || semver.satisfies(config.version, "<0.3.0"))
         config.version = "0.3.0";
 }
 
