@@ -1,0 +1,13 @@
+# Text
+* text=auto
+
+*.js text
+*.jsx text
+*.scss text
+*.css text
+*.html text
+*.json text
+
+# LFS Files
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
