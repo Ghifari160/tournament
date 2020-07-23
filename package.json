@@ -44,6 +44,7 @@
     "mime-type": "^4.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-lazy-load": "^3.0.13"
+    "react-lazy-load": "^3.0.13",
+    "semver": "^7.3.2"
   }
 }

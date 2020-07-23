@@ -1,69 +1,7 @@
-const fs = require("fs");
+const fs = require("fs"),
+      semver = require("semver");
 
 const { LOG_LEVEL, log } = require("./log.js");
-
-const default_config =
-{
-    version: "0.3.0",
-    api:
-    {
-        enabled: true,
-        path: "/api",
-        url: "http://localhost:8080/api"
-    },
-    admin:
-    {
-        enabled: true,
-        path: "/admin",
-        url: "http://localhost:8080/admin"
-    },
-    public:
-    {
-        enabled: true,
-        path: "/",
-        url: "http://localhost:8080/"
-    },
-    server:
-    {
-        dev: false,
-        listen_port: "8080",
-        doc_root: "./dist"
-    },
-    tournament:
-    {
-        organization:
-        {
-            name: "Organization"
-        },
-        name: "Tournament",
-        cover: "/assets/images/header.jpg"
-    },
-    navbar:
-    {
-        primary: "bracket",
-        links: [
-            {
-                id: "bracket",
-                text: "Bracket",
-                url: "/bracket",
-                external: false
-            },
-            {
-                id: "competitors",
-                text: "Competitors",
-                url: "/competitors",
-                external: false
-            }
-        ]
-    },
-    footer:
-    {
-        copyright: "&copy; 2020 [Organization](http://localhost:8080)",
-        extra: [
-            "Extra disclaimer can be inserted into this array"
-        ]
-    }
-};
 
 const default_bracket =
 {
@@ -203,14 +141,19 @@ const default_competitors =
     ]
 };
 
-function __configExists()
-{
-    return fs.existsSync("config.json");
-}
-
 function __directoryExists()
 {
     return fs.existsSync("data");
+}
+
+function __configExists()
+{
+    return fs.existsSync("data/config.json");
+}
+
+function __configExists_atOldLocation()
+{
+    return fs.existsSync("config.json");
 }
 
 function __bracketExists()
@@ -225,7 +168,7 @@ function __competitorsExist()
 
 function __write_defaultConfig()
 {
-    fs.writeFileSync("config.json", JSON.stringify(default_config, null, 4));
+    fs.writeFileSync("data/config.json", __sanitizeConfigString());
 }
 
 function __write_defaultBracket()
@@ -238,22 +181,227 @@ function __write_defaultCompetitors()
     fs.writeFileSync("data/competitors.json", JSON.stringify(default_competitors, null, 4));
 }
 
+function __move_configToNewLocation()
+{
+    log(LOG_LEVEL.WARN, "Moving config.json to data/config.json");
+    fs.renameSync("config.json", "data/config.json");
+}
+
+function __symlink_oldConfigLocation()
+{
+    log(LOG_LEVEL.WARN, "Creating symlink data/config.json => config.json for backwards compatibility");
+    fs.symlinkSync("data/config.json", "config.json");
+}
+
+function __sanitizeConfigObj_version(config)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty("version") || semver.statisfies(config.version, "<0.3.0"))
+        config.version = "0.3.0";
+}
+
+function __sanitizeConfigObj_serverModule(config, moduleId)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty(moduleId))
+        config[moduleId] = {};
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config[moduleId].hasOwnProperty("enabled"))
+        config[moduleId].enabled = true;
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config[moduleId].hasOwnProperty("path"))
+        config[moduleId].path = (moduleId == "public") ? `/` : `/${moduleId}`;
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config[moduleId].hasOwnProperty("url"))
+        config[moduleId].url = `http://localhost:8080${(moduleId == "public") ? `/` : `/${moduleId}`}`;
+}
+
+function __sanitizeConfigObj_server(config)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty("server"))
+        config.server = {};
+    
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.server.hasOwnProperty("dev"))
+        config.server.dev = false;
+    
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.server.hasOwnProperty("listen_port"))
+        config.server.listen_port = "8080";
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/925e26f2f10a3567dfb43fc9385a5337ca57f8b0
+    if(!config.server.hasOwnProperty("doc_root"))
+        config.server.doc_root = "./dist";
+}
+
+function __sanitizeConfigObj_tournament(config)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty("tournament"))
+        config.tournament = {};
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.tournament.hasOwnProperty("organization"))
+        config.tournament.organization = {};
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.tournament.organization.hasOwnProperty("name"))
+        config.tournament.organization.name = "Organization";
+    
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.tournament.hasOwnProperty("name"))
+        config.tournament.name = "Tournament";
+
+    // Released: v0.3.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/a109bb6871d95df407899b58280440ad2a35686e
+    if(!config.tournament.hasOwnProperty("cover"))
+        config.tournament.cover = "/assets/images/header.jpg";
+}
+
+function __sanitizeConfigObj_navbar(config)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty("navbar"))
+        config.navbar = {};
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.navbar.hasOwnProperty("primary"))
+        config.navbar.primary = "bracket";
+    
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.navbar.hasOwnProperty("links"))
+    {
+        config.navbar.links = [
+            {
+                id: "bracket",
+                text: "Bracket",
+                url: "/bracket",
+                external: false
+            },
+            {
+                id: "competitors",
+                text: "Competitors",
+                url: "/competitors",
+                external: false
+            }
+        ];
+    }
+    else
+    {
+        for(let i = 0; i < config.navbar.links.length; i++)
+        {
+            if(!config.navbar.links[i].hasOwnProperty("id"))
+                config.navbar.links[i].id = `navbar-link-${i}`;
+            
+            if(!config.navbar.links[i].hasOwnProperty("text"))
+                config.navbar.links[i].text = `Navbar Link ${i}`;
+
+            if(!config.navbar.links[i].hasOwnProperty("url"))
+                config.navbar.links[i].url = "";
+
+            if(!config.navbar.links[i].hasOwnProperty("external"))
+                config.navbar.links[i].external = false;
+        }
+    }
+}
+
+function __sanitizeConfigObj_footer(config)
+{
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.hasOwnProperty("footer"))
+        config.footer = {};
+    
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.footer.hasOwnProperty("copyright"))
+        config.footer.copyright = "&copy; 2020 [Organization](http://localhost:8080)";
+
+    // Released: v0.2.0
+    // Commit: https://github.com/Ghifari160/tournament/commit/d51ba45da701ef1598b5ad3f99b55c8cbeeb8ef3
+    if(!config.footer.hasOwnProperty("extra"))
+        config.footer.extra = [];
+}
+
+function __sanitizeConfigString(configStr = "{}")
+{
+    let config = JSON.parse(configStr);
+
+    __sanitizeConfigObj_version(config);
+    
+    __sanitizeConfigObj_serverModule(config, "api");
+    __sanitizeConfigObj_serverModule(config, "admin");
+    __sanitizeConfigObj_serverModule(config, "public");
+
+    __sanitizeConfigObj_server(config);
+
+    __sanitizeConfigObj_tournament(config);
+
+    __sanitizeConfigObj_navbar(config);
+
+    __sanitizeConfigObj_footer(config);
+
+    return JSON.stringify(config, null, 4);
+}
+
+function __sanitizeConfig()
+{
+    let configStr = fs.readFileSync("data/config.json", { encoding: "utf8" });
+
+    configStr = __sanitizeConfigString(configStr);
+
+    fs.writeFileSync("data/config.json", configStr);
+}
+
 function generate_defaultData()
 {
     let exec_start = new Date(),
         count = 0;
-
-    if(!__configExists())
-    {
-        __write_defaultConfig();
-        count++;
-    }
 
     if(!__directoryExists())
     {
         fs.mkdirSync("data");
         count++;
     }
+
+    if(__configExists_atOldLocation())
+    {
+        log(LOG_LEVEL.WARN, "config.json found at root directory. This will not be supported in future updates");
+
+        if(!fs.lstatSync("config.json").isSymbolicLink())
+        {
+            __move_configToNewLocation();
+            __symlink_oldConfigLocation();
+            count++;
+        }
+    }
+    else if(!__configExists())
+    {
+        __write_defaultConfig();
+        count++;
+    }
+    else
+        __sanitizeConfig();
     
     if(!__bracketExists())
     {
