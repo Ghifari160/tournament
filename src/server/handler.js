@@ -120,6 +120,14 @@ function handle_public(path, config, req, res, exec_start)
         case `${config.public.path}/competitors`:
             __handle_fileReq(`${config.server.doc_root}/public/app.html`, "competitors", config, req, res, exec_start);
             break;
+
+        case `${config.public.path}/app.bundle.js`:
+            __handle_fileReq(`${config.server.doc_root}/public/app.bundle.js`, "competitors", config, req, res, exec_start);
+            break;
+
+        case `${config.public.path}/app.css`:
+            __handle_fileReq(`${config.server.doc_root}/public/app.css`, "competitors", config, req, res, exec_start);
+            break;
         
         default:
             success = false;
@@ -147,6 +155,8 @@ function handle_routing(config, req, res)
         case `${(config.public.path == "") ? "/" : config.public.path}`:
         case `${config.public.path}/bracket`:
         case `${config.public.path}/competitors`:
+        case `${config.public.path}/app.bundle.js`:
+        case `${config.public.path}/app.css`:
             if(config.public.enabled && handle_public(req.url, config, req, res, exec_start))
                 break;
         

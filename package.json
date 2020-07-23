@@ -10,6 +10,10 @@
   },
   "scripts": {
     "start": "node src/server",
+    "dev:webpack:admin": "cd src/admin && npm run dev",
+    "dev:webpack:public": "cd src/public && npm run dev",
+    "dev:webpack:common": "cd src/common && npm run dev",
+    "dev:webpack": "npm run dev:webpack:admin && npm run dev:webpack:public && npm run dev:webpack:common",
     "build:webpack:admin": "cd src/admin && npm run build",
     "build:webpack:public": "cd src/public && npm run build",
     "build:webpack:common": "cd src/common && npm run build",
