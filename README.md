@@ -16,7 +16,7 @@ Download the release distribution from the
 Install the production dependencies for ths project.
 
 ``` shell
-npm i --only=prod
+npm run init
 ```
 
 Run the server.
@@ -47,14 +47,14 @@ Ensure that Git is installed.
 Clone the repository and enter the directory.
 
 ``` shell
-git clone https://github.com/Ghifari160/tournament.git
+git clone https://github.com/ghifari160/tournament.git
 cd tournament
 ```
 
 Install all dependencies for this project.
 
 ``` shell
-npm i
+npm run init:dev
 ```
 
 Run the server to generate the initial data.
@@ -66,6 +66,13 @@ npm run start
 Set `server.dev` in `config.json` to `true`. Terminate the server by pressing
 <kbd>Ctrl</kbd> + <kbd>C</kbd>. Start the server again.
 
+### Submitting changes
+
+Commit and push your changes to a fork of this repository.
+
+Create a pull request. Ensure that only changes to the server are present in the PR. For changes to
+the interfaces default themes see their respective contributing guides.
+
 ### Packaging for release
 
 Make sure all changes are committed, pushed to origin, and approved for release.
@@ -75,6 +82,9 @@ Run the build script.
 ``` shell
 npm run build
 ```
+
+The build script will build the server and _all_ themes in production mode. Additionally, the source
+code for the themes will be deleted.
 
 **Important:** Do **NOT** run this command without first committing changes to Git. This command will
 delete the following directories:
@@ -89,7 +99,6 @@ Manually delete the following files and directories (make sure you store a backu
 using the same data to continue development work on this project):
 
 ``` text
-config.json
 data/
 ```
 
