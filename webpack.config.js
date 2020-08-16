@@ -63,8 +63,10 @@ module.exports = {
         //     filename: "admin/index.html",
         //     chunks: [ "admin" ]
         // }),
-        new CopyPlugin([
-            { from: "src/common/assets", to: "common/assets" }
-        ])
+        new CopyPlugin({
+            patterns: [
+                { from: "src/common/assets", to: "common/assets" }
+            ]
+        })
     ]
 };
