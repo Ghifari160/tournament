@@ -40,7 +40,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
-    "marked": "^1.1.0",
+    "marked": "^4.0.10",
     "mime-db": "^1.44.0",
     "mime-type": "^4.0.0",
     "react": "^16.9.0",
